@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kamal Dhali — Music Artist & Content Creator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070708;--panel:#111114;--white:#f6f4ef;--muted:#9b9890;--line:#ffffff18;--accent:#ff6a32;--accent2:#ffb15c;--spot-red:#ff2d55;--spot-blue:#3f8cff;--ease:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--white);font-family:"DM Sans",sans-serif;line-height:1.55}
+button,a{font:inherit;color:inherit}
+a{text-decoration:none}
+.noise{position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* stage lighting — ambient beams echoing the live-performance photography */
+.stage-lights{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.beam{position:absolute;width:60vmax;height:60vmax;border-radius:50%;filter:blur(90px);opacity:.16;mix-blend-mode:screen;animation:drift 22s ease-in-out infinite}
+.beam.b1{top:-18%;left:-14%;background:radial-gradient(circle,var(--spot-red),transparent 65%);animation-delay:0s}
+.beam.b2{bottom:-22%;right:-16%;background:radial-gradient(circle,var(--spot-blue),transparent 65%);animation-delay:-9s}
+.beam.b3{top:38%;left:46%;width:44vmax;height:44vmax;background:radial-gradient(circle,var(--accent),transparent 68%);opacity:.09;animation-delay:-15s}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(4%,-5%) scale(1.12)}}
+@media(prefers-reduced-motion:reduce){.beam{animation:none}}
+#loader{position:fixed;inset:0;background:#050506;z-index:999;display:grid;place-items:center;transition:transform .8s var(--ease)}
+#loader.done{transform:translateY(-100%)}
+.loadbox{text-align:center}
+.loadbox strong{font:700 26px "Space Grotesk";letter-spacing:.18em}
+.loadbox strong i{font-style:normal;color:var(--accent)}
+.loadbar{width:min(310px,70vw);height:2px;background:#26262a;margin:18px auto 8px}
+.loadbar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.loadpct{font-size:10px;letter-spacing:.28em;color:var(--muted)}
+nav{position:fixed;z-index:80;top:0;left:0;right:0;padding:20px 4vw;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#070708ee,transparent)}
+.brand{font:700 19px "Space Grotesk";letter-spacing:.08em}
+.brand span{color:var(--accent)}
+.navlinks{display:flex;gap:25px}
+.navlinks button{border:0;background:none;color:var(--muted);cursor:pointer;font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+.navlinks button:hover,.navlinks button.active{color:#fff}
+.slides{position:fixed;inset:0}
+.slide{position:absolute;inset:0;padding:92px 6vw 78px;visibility:hidden;opacity:0;transform:translateY(30px);transition:opacity .65s,transform .75s var(--ease);overflow:auto}
+.slide.active{visibility:visible;opacity:1;transform:none}
+.wrap{width:min(1160px,100%);margin:auto}
+.eyebrow{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+.eyebrow:before{content:"";display:inline-block;width:28px;height:1px;background:linear-gradient(90deg,var(--accent),var(--accent2));vertical-align:middle;margin-right:10px}
+
+/* INTRO */
+.intro{min-height:100%;display:grid;grid-template-columns:1.08fr .92fr;gap:50px;align-items:center}
+.intro h1{font:700 clamp(62px,10vw,142px)/.82 "Space Grotesk";letter-spacing:-.07em;text-transform:uppercase;margin:18px 0 24px}
+.outline{color:transparent;-webkit-text-stroke:1.5px #f6f4ef}
+.grad{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;color:transparent}
+.intro .lead{max-width:650px;color:#aaa69d;font-size:clamp(15px,1.5vw,18px)}
+.hero-stack{justify-self:end;position:relative;width:min(445px,100%)}
+.hero-backing{position:absolute;width:74%;aspect-ratio:4/5;top:-9%;right:-9%;overflow:hidden;filter:saturate(.4) brightness(.5);opacity:.75;box-shadow:0 30px 60px #000}
+.hero-backing img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-frame{width:100%;justify-self:end;position:relative;padding:10px;border:1px solid var(--line);background:#0c0c0e}
+.hero-frame:before,.hero-frame:after{content:"";position:absolute;width:32px;height:32px;border:2px solid var(--accent)}
+.hero-frame:before{top:-2px;left:-2px;border-right:0;border-bottom:0}
+.hero-frame:after{right:-2px;bottom:-2px;border-left:0;border-top:0}
+.hero-frame img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.hero-tag{position:absolute;left:-28px;bottom:25px;background:#101014ee;border:1px solid var(--line);padding:9px 13px;font-size:9px;letter-spacing:.18em;text-transform:uppercase}
+.scrollhint{margin-top:38px;color:#77736d;font-size:9px;letter-spacing:.25em;text-transform:uppercase}
+.scrollhint span{display:inline-block;margin-right:9px;color:var(--accent);animation:bounce 1.5s infinite}
+@keyframes bounce{50%{transform:translateY(5px)}}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:.7fr 1.3fr;gap:70px;align-items:center;min-height:100%}
+.college-card{position:relative;text-align:center}
+.photo-orb{position:relative;width:min(230px,68%);aspect-ratio:1/1;margin:0 auto 20px}
+.photo-orb .ring{position:absolute;inset:-15px;border-radius:50%;border:1.5px dashed var(--accent2);opacity:.5;animation:spin 16s linear infinite}
+.photo-orb .ring2{position:absolute;inset:-28px;border-radius:50%;border:1px solid #ffffff20;animation:spin 24s linear infinite reverse}
+.photo-orb .ring:before{content:"";position:absolute;top:-3px;left:50%;width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.photo-orb .frame{position:absolute;inset:0;border-radius:50%;overflow:hidden;border:3px solid #0c0c0e;box-shadow:0 18px 40px #000}
+.photo-orb .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.1s ease}
+.photo-orb .frame img.active{opacity:1}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.photo-orb .ring,.photo-orb .ring2{animation:none}}
+.college-card .small{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.about h2,.music h2,.contact h2{font:700 clamp(40px,5.5vw,74px)/.94 "Space Grotesk";text-transform:uppercase;letter-spacing:-.04em;margin:15px 0 24px}
+.about h2 em,.music h2 em{font-style:normal;color:transparent;-webkit-text-stroke:1px var(--accent2)}
+.about p{max-width:680px;color:var(--muted);margin:0 0 15px}
+.hobbies{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.hobby{border:1px solid var(--line);background:#101013;padding:9px 13px;border-radius:999px;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+
+/* SKILLS / PASSION */
+.passion{min-height:100%;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:50px}
+.passion-copy{max-width:610px}
+.passion-copy h2{font:700 clamp(38px,5vw,67px)/.95 "Space Grotesk";text-transform:uppercase;letter-spacing:-.04em;margin:14px 0 20px}
+.passion-copy p{color:var(--muted);font-size:14px;margin-bottom:18px}
+.scrollbox{height:205px;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0;position:relative}
+.scrolltrack{animation:up 18s linear infinite}
+.scrolltrack div{padding-bottom:26px}
+.scrolltrack b{font:700 11px "Space Grotesk";letter-spacing:.15em;text-transform:uppercase;color:#eee}
+.scrolltrack p{font-size:13px;color:#88847d;margin-top:7px;max-width:560px}
+@keyframes up{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}
+
+.orbit{width:min(500px,78vw);aspect-ratio:1;position:relative;justify-self:center;display:grid;place-items:center;perspective:900px}
+.orbit:before,.orbit:after{content:"";position:absolute;border:1px solid #ffffff16;border-radius:50%;pointer-events:none}
+.orbit:before{inset:7%}
+.orbit:after{inset:25%}
+.orbit-center{position:absolute;width:39%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#17191f,#090a0c 72%);border:1px solid #ffffff24;display:grid;place-items:center;z-index:20;box-shadow:0 0 70px #000,0 0 45px #ff6a3220}
+.orbit-center:after{content:"MUSIC • ENGINEERING";position:absolute;bottom:12%;font-size:7px;letter-spacing:.22em;color:#77736d}
+.orbit-center img{width:57%;height:57%;object-fit:contain;filter:drop-shadow(0 10px 20px #000)}
+.orbit-ring{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
+.orbit-photo{position:absolute;left:50%;top:50%;width:27%;aspect-ratio:1;border-radius:18px;overflow:hidden;border:4px solid #0a0a0d;box-shadow:0 18px 42px #000;will-change:transform,opacity,filter;transition:opacity .35s,filter .35s}
+.orbit-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.orbit-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,#0008)}
+.orbit-photo.depth-back{opacity:.28;filter:saturate(.55) brightness(.65)}
+.orbit-photo.depth-mid{opacity:.58;filter:saturate(.75) brightness(.8)}
+.orbit-photo.depth-front{opacity:1;filter:none}
+
+/* MUSIC */
+.music{min-height:100%;display:grid;grid-template-columns:.42fr 1.58fr;gap:55px;align-items:center}
+.music-rail{display:flex;flex-direction:column;align-items:center;gap:26px}
+.music-logo{display:grid;place-items:center;text-align:center}
+.music-logo a{display:block}
+.music-logo img{width:min(170px,60%);display:block;margin:auto;filter:drop-shadow(0 20px 35px #000);transition:transform .35s}
+.music-logo img:hover{transform:scale(1.06) rotate(-2deg)}
+.music-logo small{display:block;color:var(--muted);font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-top:14px}
+.rail-divider{width:1px;height:26px;background:linear-gradient(var(--line),transparent)}
+.music-copy h2{margin-bottom:15px}
+.music-copy>p{color:var(--muted);max-width:690px;font-size:14px}
+.tracks{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}
+.track-card{background:var(--panel);border:1px solid var(--line);padding:17px;transition:border-color .3s,transform .3s}
+.track-card:hover{border-color:#ffffff30;transform:translateY(-3px)}
+.track-card .type{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent2)}
+.track-card h3{font:600 18px "Space Grotesk";margin:8px 0 4px}
+.track-card p{font-size:11px;color:#77736d;min-height:35px}
+.eq{display:flex;align-items:flex-end;gap:3px;height:20px;margin-top:14px}
+.eq i{flex:1;background:linear-gradient(180deg,var(--accent2),var(--accent));border-radius:1px;height:22%;transform-origin:bottom;animation:eq 1.1s ease-in-out infinite;animation-play-state:paused;opacity:.55}
+.eq i:nth-child(1){animation-delay:-.9s}.eq i:nth-child(2){animation-delay:-.5s}.eq i:nth-child(3){animation-delay:-1.1s}.eq i:nth-child(4){animation-delay:-.2s}.eq i:nth-child(5){animation-delay:-.7s}
+.track-card.playing .eq i{animation-play-state:running;opacity:1}
+@keyframes eq{0%,100%{height:22%}50%{height:100%}}
+.track-card audio{width:100%;height:34px;margin-top:10px}
+.phone{display:block;width:min(150px,72%);margin:0 auto;aspect-ratio:9/18;border:7px solid #17171b;border-radius:25px;background:#050506;box-shadow:0 20px 45px #000;overflow:hidden;position:relative}
+.phone:before{content:"";position:absolute;top:5px;left:50%;transform:translateX(-50%);width:43px;height:5px;border-radius:10px;background:#202025;z-index:3}
+.phone-screen{position:absolute;inset:0;padding:22px 9px 9px;background:radial-gradient(circle at 40% 30%,#303044,#070708 60%)}
+.phone-screen img{width:100%;height:100%;object-fit:cover;border-radius:15px;opacity:.68;transition:transform .5s,opacity .5s}
+.phone:hover .phone-screen img{transform:scale(1.05);opacity:.9}
+.phone-ui{position:absolute;top:27px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;color:#fff;text-shadow:0 1px 8px #000;font-size:7px;letter-spacing:.12em;text-transform:uppercase}
+.phone-ui b{font-weight:600}
+.video-label{position:absolute;inset:auto 12px 14px;color:#fff;font-size:9px;letter-spacing:.13em;text-transform:uppercase}
+.phone-caption{text-align:center;color:var(--muted);font-size:9px;letter-spacing:.16em;text-transform:uppercase;margin-top:14px}
+.phone-copy{margin-top:30px;max-width:660px}
+.phone-copy h3{font:600 20px "Space Grotesk";margin-bottom:5px}
+.phone-copy p{color:var(--muted);font-size:12px;max-width:500px}
+.ig-btn{display:inline-block;margin-top:11px;border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:9px;letter-spacing:.16em;text-transform:uppercase}
+.ig-btn:hover{border-color:var(--accent)}
+
+/* CONTACT */
+.contact{padding-top:110px}
+.contact h2{max-width:850px;margin-bottom:38px}
+.stroke{color:transparent;-webkit-text-stroke:1px #f6f4ef}
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.contact-card{background:#101013;border:1px solid var(--line);padding:22px}
+.contact-card small{display:block;color:var(--muted);font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:9px}
+.contact-card strong{display:block;font:600 17px "Space Grotesk";word-break:break-word}
+.contact-card a{display:inline-block;margin-top:13px;color:var(--accent2);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.footer{margin-top:55px;color:#66625c;font-size:9px;letter-spacing:.16em;text-transform:uppercase}
+
+.side-dots{position:fixed;z-index:70;right:25px;top:50%;transform:translateY(-50%);display:grid;gap:11px}
+.side-dots button{width:7px;height:7px;border-radius:50%;border:1px solid #ffffff55;background:transparent;cursor:pointer;padding:0}
+.side-dots button.active{background:var(--accent);border-color:var(--accent);box-shadow:0 0 12px #ff6a3288}
+.bottom{position:fixed;z-index:70;left:4vw;right:4vw;bottom:20px;display:flex;justify-content:space-between;align-items:center}
+.counter{font:600 10px "Space Grotesk";letter-spacing:.15em;color:#66625c}
+.counter b{color:#fff}
+.arrows{display:flex;gap:7px}
+.arrows button{width:36px;height:36px;border:1px solid var(--line);background:#0c0c0eee;cursor:pointer}
+.arrows button:hover{border-color:var(--accent);color:var(--accent)}
+.marquee{position:fixed;z-index:65;bottom:0;left:0;right:0;overflow:hidden;pointer-events:none;background:linear-gradient(transparent,#070708 65%);padding-top:28px}
+.marquee-track{display:flex;width:max-content;animation:marquee 26s linear infinite}
+.marquee span{font:600 9px "Space Grotesk";letter-spacing:.18em;text-transform:uppercase;color:#44413c;padding-right:38px}
+.marquee i{color:var(--accent);font-style:normal;margin-left:18px}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+@media(max-width:900px){
+nav{padding:17px 5vw}.navlinks{gap:13px}.navlinks button{font-size:8px}
+.slide{padding:84px 7vw 72px}.intro{grid-template-columns:1fr;gap:30px}.hero-stack{width:min(390px,70vw);justify-self:start}.hero-backing{width:66%}
+.about,.passion,.music{grid-template-columns:1fr;gap:25px}.about{align-content:center}.college-card{display:none}
+.orbit{width:min(430px,85vw);order:-1}
+.music-rail{flex-direction:row;justify-content:center;gap:30px}.rail-divider{width:1px;height:60px}.tracks{grid-template-columns:1fr}
+.contact-grid{grid-template-columns:1fr}
+.marquee{display:none}
+}
+@media(max-width:560px){
+.intro h1{font-size:clamp(54px,16vw,88px)}.intro .lead{font-size:14px}.hero-stack{width:82%}
+.about h2,.music h2{font-size:39px}.scrollbox{height:185px}
+.phone{width:100px}.phone-copy h3{font-size:16px}.phone-copy p{font-size:11px}.music-rail{flex-direction:column}.rail-divider{width:26px;height:1px}
+.bottom{padding-left:7vw;padding-right:7vw}.side-dots{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<div id="loader"><div class="loadbox"><strong>KAMAL<i>•</i>DHALI</strong><div class="loadbar"><span id="loadfill"></span></div><div class="loadpct" id="loadpct">0%</div></div></div>
+<div class="stage-lights" aria-hidden="true"><span class="beam b1"></span><span class="beam b2"></span><span class="beam b3"></span></div>
+<div class="noise"></div>
+
+<nav>
+  <a class="brand" href="#" data-go="0">KD<span>//</span>17</a>
+  <div class="navlinks">
+    <button class="active" data-go="0">Intro</button>
+    <button data-go="1">About</button>
+    <button data-go="2">Skills</button>
+    <button data-go="3">Music</button>
+    <button data-go="4">Contact</button>
+  </div>
+</nav>
+
+<main class="slides">
+<section class="slide active">
+  <div class="wrap intro">
+    <div>
+      <div class="eyebrow">Music Artist • Content Creator</div>
+      <h1>KAMAL<br><span class="outline">DHA<span class="grad">LI</span></span></h1>
+      <p class="lead">I create music, compose original ideas, and put my own touch on the songs I love. From experimenting with sounds in FL Studio to sharing covers and original music on Instagram, music is where I create, explore, and express myself.</p>
+      <div class="scrollhint"><span>↓</span> Scroll to explore my work</div>
+    </div>
+    <div class="hero-stack">
+      <div class="hero-backing"><img src="assets/stage-duo.jpeg" alt="Kamal performing live on stage"></div>
+      <div class="hero-frame">
+        <img src="assets/hero.jpeg" alt="Kamal Dhali with a microphone">
+        <div class="hero-tag">Music • Creativity • Expression</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="wrap about">
+    <div class="college-card">
+      <div class="photo-orb" aria-label="Rotating photo of Kamal">
+        <div class="ring" aria-hidden="true"></div>
+        <div class="ring2" aria-hidden="true"></div>
+        <div class="frame">
+          <img class="active" src="assets/about-portrait.jpeg" alt="Kamal Dhali on campus">
+          <img src="assets/about-with-dad.jpeg" alt="Kamal Dhali with his father">
+        </div>
+      </div>
+      <div class="small">A glimpse of my creative side</div>
+    </div>
+    <div>
+      <div class="eyebrow">01 / About Me</div>
+      <h2>Engineer by <em>Education</em>, Creator by Passion</h2>
+      <p>I am currently pursuing my Bachelor’s degree in Electrical and Electronics Engineering (EEE) at the National Institute of Technology Goa. My education has built my interest in electrical systems, electronics, programming and practical project development.</p>
+      <p>Outside academics, I enjoy exploring creative activities that keep me curious and expressive. I love playing the guitar, making drawings, playing football, experimenting with music and finding new ways to turn ideas into something I can share.</p>
+      <div class="hobbies">
+        <span class="hobby">🎸 Guitar</span><span class="hobby">🎵 Music</span><span class="hobby">🎨 Drawing</span><span class="hobby">⚽ Football</span><span class="hobby">🎧 Music Production</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="wrap passion">
+    <div class="passion-copy">
+      <div class="eyebrow">02 / Skills</div>
+      <h2>Electrical Engineering <span class="grad">+</span> Music</h2>
+      <div class="scrollbox">
+        <div class="scrolltrack">
+          <div><b>Education & Electrical Engineering</b><p>I am currently pursuing my Bachelor’s degree in Electrical and Electronics Engineering (EEE). My engineering journey has helped me develop a strong interest in electrical systems, electronics, programming, and practical project development. I enjoy learning how technology works and applying my knowledge to build and experiment with real-world projects.</p></div>
+          <div><b>Passion for Music & FL Studio</b><p>Alongside engineering, music is one of my biggest passions. I am enthusiastic about exploring music production using FL Studio, where I experiment with beats, melodies, sounds, and different styles of music. I also enjoy playing the guitar, which allows me to express my creativity and connect with music on a deeper level.</p></div>
+          <div><b>Creating & Sharing</b><p>As a music enthusiast and aspiring content creator, I love creating new music, exploring fresh ideas, and sharing my musical journey with others. For me, music is not just a hobby—it is a creative space where I can experiment, express myself, and continuously learn something new.</p></div>
+          <div><b>Education & Electrical Engineering</b><p>I am currently pursuing my Bachelor’s degree in Electrical and Electronics Engineering (EEE), combining technical learning with creative exploration.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="orbit" aria-label="Rotating gallery of music and guitar photos">
+      <div class="orbit-ring">
+        <div class="orbit-photo"><img src="assets/guitar1.jpeg" alt="Kamal playing guitar"></div>
+        <div class="orbit-photo"><img src="assets/stage-profile.jpeg" alt="Kamal singing with a microphone"></div>
+        <div class="orbit-photo"><img src="assets/guitar2.jpeg" alt="Kamal playing guitar"></div>
+        <div class="orbit-photo"><img src="assets/stage-green.jpeg" alt="Kamal performing"></div>
+        <div class="orbit-photo"><img src="assets/hero.jpeg" alt="Kamal with a microphone"></div>
+        <div class="orbit-photo"><img src="assets/stage-back.jpeg" alt="Kamal from behind"></div>
+        <div class="orbit-photo"><img src="assets/stage-duo.jpeg" alt="Kamal performing with a fellow musician"></div>
+      </div>
+      <div class="orbit-center"><img src="assets/nit-goa.png" alt="NIT Goa logo"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="wrap music">
+    <div class="music-rail">
+      <div class="music-logo">
+        <a href="https://drive.google.com/drive/folders/1wpLmtEsTNQG9Nt3Ka9yx1wVJUXYSgWz2?usp=drive_link" target="_blank" rel="noopener">
+          <img src="assets/fl-studio.png" alt="FL Studio logo">
+          <small>Open FL Studio Projects / Music Drive ↗</small>
+        </a>
+      </div>
+
+      <div class="rail-divider"></div>
+
+      <div>
+        <a class="phone" href="https://www.instagram.com/not_e_17/" target="_blank" rel="noopener" aria-label="Open Kamal's Instagram">
+          <div class="phone-screen">
+            <img src="assets/guitar1.jpeg" alt="Kamal playing guitar">
+            <div class="phone-ui"><span>instagram</span><b>@not_e_17</b></div>
+            <div class="video-label">Tap to open<br>Instagram ↗</div>
+          </div>
+        </a>
+        <div class="phone-caption">Music on Instagram</div>
+      </div>
+    </div>
+
+    <div class="music-copy">
+      <div class="eyebrow">03 / Music Projects & Content</div>
+      <h2>Where Ideas Become <em>Sound</em></h2>
+      <p>I use FL Studio to experiment with melodies, beats, arrangements and different sounds. Some ideas begin as a simple melody and grow into a complete project. The audio samples below are part of that journey, while the FL Studio logo opens my project folder for a deeper look at the work behind the music.</p>
+
+      <div class="tracks">
+        <article class="track-card"><span class="type">Original / Project</span><h3>Hua Hai</h3><p>A personal music project built around melody, mood and arrangement.</p><div class="eq"><i></i><i></i><i></i><i></i><i></i></div><audio controls preload="none" src="assets/hua-hai.mp3"></audio></article>
+        <article class="track-card"><span class="type">Original / Project</span><h3>Qayde Se</h3><p>A production experiment where I explored my own musical ideas.</p><div class="eq"><i></i><i></i><i></i><i></i><i></i></div><audio controls preload="none" src="assets/qayde-se.mp3"></audio></article>
+        <article class="track-card"><span class="type">Cover</span><h3>Yun Hi</h3><p>A cover created and shared as part of my musical content journey.</p><div class="eq"><i></i><i></i><i></i><i></i><i></i></div><audio controls preload="none" src="assets/yun-hi-cover.mp3"></audio></article>
+      </div>
+
+      <div class="phone-copy">
+        <h3>Behind the Scenes on Instagram</h3>
+        <p>I enjoy taking songs I connect with, giving them my own interpretation, and sharing the result as Instagram content. The phone mockup on the left is a visual preview for this side of my creative work — tap it to visit my Instagram profile.</p>
+        <a class="ig-btn" href="https://www.instagram.com/not_e_17/" target="_blank" rel="noopener">Visit Instagram ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide contact">
+  <div class="wrap">
+    <div class="eyebrow">04 / Contact</div>
+    <h2>Let's Create<br><span class="stroke">Something</span> <span class="grad">Meaningful</span></h2>
+    <div class="contact-grid">
+      <div class="contact-card"><small>Email</small><strong>dhalikamal880@gmail.com</strong><a href="mailto:dhalikamal880@gmail.com">Send an email ↗</a></div>
+      <div class="contact-card"><small>Instagram</small><strong>@not_e_17</strong><a href="https://www.instagram.com/not_e_17/" target="_blank" rel="noopener">Open Instagram ↗</a></div>
+      <div class="contact-card"><small>LinkedIn</small><strong>kamal-dhali-0443a030</strong><a href="https://www.linkedin.com/in/kamal-dhali-0443a030" target="_blank" rel="noopener">View LinkedIn ↗</a></div>
+    </div>
+    <div class="footer">© 2026 Kamal Dhali • Music Artist • Content Creator • EEE</div>
+  </div>
+</section>
+</main>
+
+<div class="side-dots">
+  <button class="active" data-go="0"></button><button data-go="1"></button><button data-go="2"></button><button data-go="3"></button><button data-go="4"></button>
+</div>
+<div class="bottom"><span class="counter"><b id="num">01</b> / 05</span><div class="arrows"><button id="prev">←</button><button id="next">→</button></div></div>
+<div class="marquee"><div class="marquee-track"><span>Music Artist <i>✦</i></span><span>Content Creator <i>✦</i></span><span>FL Studio <i>✦</i></span><span>Guitar <i>✦</i></span><span>Original Music <i>✦</i></span><span>Instagram Covers <i>✦</i></span><span>Music Artist <i>✦</i></span><span>Content Creator <i>✦</i></span></div></div>
+
+<script>
+(()=> {
+  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+  let page=0,busy=false,slides=$$('.slide');
+
+  let p=0;
+  const loader=setInterval(()=>{
+    p=Math.min(100,p+Math.floor(Math.random()*14)+8);
+    $('#loadfill').style.width=p+'%';
+    $('#loadpct').textContent=p+'%';
+    if(p>=100){clearInterval(loader);setTimeout(()=>$('#loader').classList.add('done'),220)}
+  },75);
+
+  function ui(){
+    $('#num').textContent=('0'+(page+1)).slice(-2);
+    $$('.side-dots button').forEach((b,n)=>b.classList.toggle('active',n===page));
+    $$('.navlinks button').forEach((b,n)=>b.classList.toggle('active',n===page));
+  }
+
+  function go(n){
+    if(busy)return;
+    n=(n+5)%5;
+    if(n===page)return;
+    busy=true;
+    slides[page].classList.remove('active');
+    slides[n].classList.add('active');
+    page=n; ui();
+    setTimeout(()=>busy=false,700);
+  }
+
+  $$('[data-go]').forEach(b=>b.onclick=e=>{e.preventDefault();go(+b.dataset.go)});
+  $('#prev').onclick=()=>go(page-1);
+  $('#next').onclick=()=>go(page+1);
+
+  addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' '].includes(e.key)){e.preventDefault();go(page+1)}
+    else if(['ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();go(page-1)}
+  });
+  addEventListener('wheel',e=>{if(Math.abs(e.deltaY)>45)go(page+(e.deltaY>0?1:-1))},{passive:true});
+  let sy=0;
+  addEventListener('touchstart',e=>sy=e.touches[0].clientY,{passive:true});
+  addEventListener('touchend',e=>{let dy=e.changedTouches[0].clientY-sy;if(Math.abs(dy)>45)go(page+(dy<0?1:-1))},{passive:true});
+
+  // 3D rotating photo ring: front images are larger/brighter, rear images fade back.
+  const photos=[...document.querySelectorAll('.orbit-photo')];
+  let angle=0,last=performance.now();
+  function orbit(now){
+    const dt=Math.min(32,now-last); last=now;
+    angle=(angle+dt*.018)%360;
+    const r=190,step=360/photos.length;
+    photos.forEach((el,i)=>{
+      const a=(i*step+angle)*Math.PI/180;
+      const x=Math.sin(a)*r, y=Math.cos(a)*r*.66, z=Math.sin(a)*r;
+      const scale=.72+((z+r)/(2*r))*.32;
+      el.style.transform=`translate(-50%,-50%) translate3d(${x}px,${y}px,${z*.34}px) scale(${scale})`;
+      el.style.zIndex=100+Math.round(z);
+      el.classList.toggle('depth-front',z>70);
+      el.classList.toggle('depth-mid',z<=70&&z>-70);
+      el.classList.toggle('depth-back',z<=-70);
+    });
+    requestAnimationFrame(orbit);
+  }
+  requestAnimationFrame(orbit);
+
+  // circular photo orb on the About page: crossfade through the stacked photos
+  const orbPhotos=$$('.photo-orb .frame img');
+  if(orbPhotos.length){
+    let oi=0;
+    setInterval(()=>{
+      orbPhotos[oi].classList.remove('active');
+      oi=(oi+1)%orbPhotos.length;
+      orbPhotos[oi].classList.add('active');
+    },2000);
+  }
+
+  // wake the equalizer on each track card while its audio is actually playing
+  $$('.track-card audio').forEach(a=>{
+    const card=a.closest('.track-card');
+    a.addEventListener('play',()=>card.classList.add('playing'));
+    a.addEventListener('pause',()=>card.classList.remove('playing'));
+    a.addEventListener('ended',()=>card.classList.remove('playing'));
+  });
+
+  ui();
+})();
+</script>
+</body>
+</html>
